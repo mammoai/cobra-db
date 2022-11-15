@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "cobra_db"
+version = "0.0.0"
+description = "COnsolidated BReast cancer Analysis DataBase"
+authors = ["Fernando Cossio", "Apostolia Tsirikoglou", "Haiko Schurz", "Fredrik Strand"]
+license = "Apache License 2.0"
+readme = "README.md"
+include = ["src/cobra_db/deid_recipe.txt"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pydicom = "^2.3.0"
+numpy = "^1.23.2"
+dnspython = "^2.2.1"
+pymongo = {extras = ["srv"], version = "^4.2.0"}
+tqdm = "^4.64.1"
+deid = "^0.2.36"
+pycryptodome = "^3.15.0"
+pyaml-env = "^1.1.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+pre-commit = "^2.20.0"
+black = "^22.6.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+Sphinx = "^5.1.1"
+sphinx-autoapi = "^1.9.0"
+sphinx-rtd-theme = "^1.0.0"
+myst-nb = {version = "^0.16.0", python = "^3.9"}
+python-semantic-release = "^7.31.4"
+pytest-mongodb = "^2.2.0"
+python-dotenv = "^0.21.0"
+
+[tool.semantic_release]
+version_variable = "pyproject.toml:version" # version location
+branch = "main"                             # branch to make releases of
+changelog_file = "CHANGELOG.md"             # changelog file
+build_command = "poetry build"              # build dists
+dist_path = "dist/"                         # where to put dists
+upload_to_release = true                    # auto-create GitHub release
+upload_to_pypi = false                      # don't auto-upload to PyPI
+remove_dist = false                         # don't remove dists
+patch_without_tag = true                    # patch release by default
+
+[tool.poetry.scripts]
+cobra_ingest = "cobra_db.scripts.stage_1_ingest_images:cli"
+cobra_group = "cobra_db.scripts.stage_2:cli"
+cobra_pseudonymize = "cobra_db.scripts.pseudonymize_image_metadata:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

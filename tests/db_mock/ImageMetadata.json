@@ -1,0 +1,32 @@
+[
+    {
+        "_id": {
+            "$oid": "62a744bd2f79288ae72033a6"
+        },
+        "_metadata": {
+            "model_version": "0.1.5",
+            "created": {
+                "$date": "2022-06-13T14:07:57.785Z"
+            },
+            "modified": {
+                "$date": "2022-07-14T09:13:32.289Z"
+            }
+        },
+        "dicom_tags": {
+            "StudyDescription": {
+                "vr": "LO",
+                "Value": [
+                    "Mammographic Screening"
+                ]
+            }
+        },
+        "file_source": {
+            "drive_name": "drive_1",
+            "rel_path": "path_to_file/myfile.dcm",
+            "filename": "myfile.dcm"
+        },
+        "study_id": {
+            "$oid": "62cfde3cbe6fe3a87ff83ce7"
+        }
+    }
+]

@@ -1,0 +1,21 @@
+[
+        {
+            "_id": {
+                "$oid": "662b466c4b329eb8c3db86dd"
+            },
+            "anon_id": "12345678900",
+            "birth_date": {
+                "$date": "1900-01-01T00:00:00.000Z"
+            },
+            "hidden": false,
+            "_metadata": {
+                "model_version": "0.1.2",
+                "created": {
+                    "$date": "2022-03-11T12:53:48.546Z"
+                },
+                "modified": {
+                    "$date": "2022-04-26T09:48:33.780Z"
+                }
+            }
+        }
+]

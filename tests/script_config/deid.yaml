@@ -1,0 +1,45 @@
+# The instance from where the data will be sourced
+src_mongo:
+  host: !ENV ${MONGOHOST}
+  port: 27017
+  db_name: test_db
+  username: !ENV ${MONGOUSER}
+  password: !ENV ${MONGOPASS}
+
+# If you want a subset of the data, you can write your query in MQL here
+query: {}
+
+# The instance that will receive the pseudonymized docs
+dst_mongo:
+  host: !ENV ${MONGOHOST}
+  port: 27017
+  db_name: test_db_2
+  username: !ENV ${MONGOUSER}
+  password: !ENV ${MONGOPASS}
+
+# Secret salt for hashing
+hash_secret: !ENV ${HASH_SECRET}
+
+# The paths where the drives have been mounted.
+# drive_name: local_drive_path
+# If you don't know the drive_names that will be required, run the command without
+# configuring this field and you will get asked for the missing drive_names
+mount_paths:
+  PseudoPHI: !ENV ${DICOM_SRC_PATH}
+  HashedPHI: !ENV ${DICOM_DST_PATH}
+
+dst_drive_name: HashedPHI
+dst_rel_dir: rel_path/to/my/dst_path # where the new tree will be built
+
+# number of images per process
+batch_size: 10
+
+# number of concurrent processes
+n_proc: 1
+
+# deid recipe path. How to deidentify the images. Set to null if default is to be used
+deid_recipe_path: null
+
+# logging config
+logging_dir: null
+logging_level: WARNING
