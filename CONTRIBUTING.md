@@ -1,9 +1,19 @@
 # Contributing
 
 Contributions are welcome, and they are greatly appreciated! Every little bit
-helps, and credit will always be given.
+helps, and credit will always be given. Our main communication channel is 
+[Github Issues](https://github.com/mammoai/cobra-db/issues). The
+[Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+syntax is used for editing and formating.
 
 ## Types of Contributions
+
+### Ask questions
+
+Asking questions in Github Issues help us understand what are the uses that you have for
+the tool. It also helps other users to find previously answered questions quickly.
+
+If you are asking a question, please be as specific as possible.
 
 ### Report Bugs
 
@@ -56,10 +66,10 @@ Ready to contribute? Here's how to set up `cobra_db` for local development.
 
 4. Make your modifications.
 
-5. When you're done making changes, check that your the tests are passing:
+5. When you're done making changes, check that the tests are passing:
     ```bash
     poetry run pytest tests/ --cov=cobra_db
-    # deselect slow tests with '-m "not slow"'
+    ## deselect slow tests with '-m "not slow"'
     # poetry run pytest tests/ --cov=cobra_db -m "not slow"
     ```
 
@@ -75,9 +85,11 @@ Ready to contribute? Here's how to set up `cobra_db` for local development.
     pre-commit run --all-files
     ```
 
-7. Commit your changes following the [Angular Commit Message Format](https://gist.github.com/brianclements/841ea7bffdb01346392c) and open a pull request. Following the Angular message format, allows us to automatically
-    keep track of the versions and the change log.
-    a quick recap of the format:
+7. Commit your changes following the 
+   [Angular Commit Message Format](https://gist.github.com/brianclements/841ea7bffdb01346392c) 
+   and open a pull request. Following the Angular message format, allows us to 
+   automaticallykeep track of the versions and the change log. A quick recap of the 
+   format:
     ```
     <type>(<scope>): <subject>
     <BLANK LINE>
@@ -87,17 +99,20 @@ Ready to contribute? Here's how to set up `cobra_db` for local development.
     ```
     Type must be one of the following:
     * **build**: Changes that affect the build system or external dependencies
-    * **ci**: Changes to our CI configuration files and scripts (github actions workflows)
+    * **ci**: Changes to our CI configuration files and scripts (github actions 
+      workflows)
     * **docs**: Documentation only changes
     * **feat**: A new feature
     * **fix**: A bug fix
     * **perf**: A code change that improves performance
     * **refactor**: A code change that neither fixes a bug nor adds a feature
-    * **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+    * **style**: Changes that do not affect the meaning of the code (white-space, 
+      formatting, missing semi-colons, etc)
     * **test**: Adding missing tests or correcting existing tests
 
 ### Scope
-The scope should be the name of the npm package affected (as perceived by the person reading the changelog generated from commit messages).
+The scope should be the name of the npm package affected (as perceived by the person 
+reading the changelog generated from commit messages).
 
 
 ## Pull Request Guidelines

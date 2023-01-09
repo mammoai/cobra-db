@@ -16,8 +16,10 @@
 
 
 
-## What is this?
+## What is ```cobra_db```?
 _cobra_db_ is a python package that allows you to extract DICOM metadata and store it in a MongoDB database. Allowing you to index, transform, and export your medical imaging metadata.
+
+With cobra_db, you will have more visibility of your data enabling you to get more value from your medical imaging studies.
 
 Once the metadata is in the database, you can import other text-based information (csv or json) into a custom collection and then run queries. This allows you to mix and match data extracted from different sources in different formats.
 
@@ -75,12 +77,12 @@ print(im.date.file_source.rel_path)
 
 ## Contributing
 
-Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
+Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a [Code of Conduct](https://cobra-db.readthedocs.io/en/latest/conduct.html). By contributing to this project, you agree to abide by its terms.
 
 ## License
 
-`cobra_db` was created by Fernando Cossio, Apostolia Tsirikoglou, Haiko Schurz, and Fredrik Strand. It is licensed under the terms of the Apache License 2.0 license.
+`cobra_db` was created by Fernando Cossio, Apostolia Tsirikoglou, Annika Gregoorian, Haiko Schurz, and Fredrik Strand. It is licensed under the terms of the Apache License 2.0 license.
 
-## Credits
+## Aknowledgements
 
 This project has been funded by research grants Regional Cancer Centers in Collaboration 21/00060, and Vinnova 2021-0261.
