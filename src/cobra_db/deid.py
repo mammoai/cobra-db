@@ -2,7 +2,7 @@ import logging
 import os
 from copy import deepcopy
 from datetime import datetime
-from typing import Union, List
+from typing import List, Union
 
 import pydicom
 from deid.config import DeidRecipe

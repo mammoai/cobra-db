@@ -1,4 +1,4 @@
-# Addition to the VAI-B pseudonymization recipe to preserve dicom tags relevant to MRI studies. 
+# Addition to the VAI-B pseudonymization recipe to preserve dicom tags relevant to MRI studies.
 FORMAT dicom
 
 %header
@@ -92,4 +92,4 @@ KEEP TransferSyntaxUID
 KEEP TriggerWindow
 KEEP VariableFlipAngleFlag
 KEEP WindowCenter
-KEEP WindowWidth 
+KEEP WindowWidth

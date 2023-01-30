@@ -8,7 +8,7 @@
 #     stored. Weight is rounded to intervals of 5 kg. Length is rounded to intervals of
 #     5 cm. Age is rounded to intervals of 5 years.
 # •	Acquisition times are preserved.
-# •	Study description is preserved.
+# •	Study and series descriptions are preserved.
 # •	Retain Institution Identity Option is followed.
 # •	Retain Device Identity Option is followed.
 # •	Retain Longitudinal Temporal Information with Full Dates Option is followed.
@@ -19,7 +19,7 @@ FORMAT dicom
 %header
 
 ADD PatientIdentityRemoved Yes
-ADD DeidentificationMethod vaib_deid_v1.0.0
+ADD DeidentificationMethod vaib_deid_v1.0.1
 
 # Replacements with custom functions. Those can be found in cobra_db.deid
 
@@ -344,6 +344,7 @@ KEEP SelectorDAValue
 KEEP SelectorDTValue
 KEEP SelectorTMValue
 KEEP SeriesDate
+KEEP SeriesDescription
 KEEP SeriesInstanceUID
 KEEP SeriesTime
 KEEP SmokingStatus
@@ -596,7 +597,6 @@ REMOVE ScheduledPerformingPhysicianIdentificationSequence
 REMOVE ScheduledPerformingPhysicianName
 REMOVE ScheduledProcedureStepDescription
 REMOVE ScheduledProcedureStepID
-REMOVE SeriesDescription
 REMOVE ServiceEpisodeDescription
 REMOVE ServiceEpisodeID
 REMOVE SetupTechniqueDescription
