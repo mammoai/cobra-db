@@ -63,10 +63,5 @@ def get_series_path(ds: Dataset):
 
 def get_instance_path(ds: Dataset):
     """Get unique path for instance"""
-    instance_number = opt(ds, "InstanceNumber", None)
-
-    if instance_number:
-        key = instance_number
-    else:
-        key = ds.SOPInstanceUID
+    key = ds.SOPInstanceUID
     return os.path.join(get_series_path(ds), f"{key}.dcm")

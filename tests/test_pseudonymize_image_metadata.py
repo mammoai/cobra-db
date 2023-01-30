@@ -79,8 +79,9 @@ def test_main(cfg):
     assert os.path.exists(
         os.path.join(
             dst_path,
-            "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_\
-CT_125800_UNK/13.dcm",
+            "rel_path/to/my/dst_path/660/05c/ed21cd\
+58352ee70252/study_20002605/series_CT_125800_NEPHRO--4-0--B40f--M-0-4/2.25.9906061869367\
+4907730262422884187749878.dcm",
         )
     )
     # run for all images
@@ -105,7 +106,7 @@ O  4.0  B40f  M0.4-18678/1-007.dcm",
         os.path.join(
             dst_path,
             "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_CT\
-_125800_UNK/7.dcm",
+_125800_NEPHRO--4-0--B40f--M-0-4/2.25.29709809808460026253134446579710279158.dcm",
         )
     )
 
@@ -141,8 +142,9 @@ def test_main_multiproc(cfg):
     assert os.path.exists(
         os.path.join(
             dst_path,
-            "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_\
-CT_125800_UNK/13.dcm",
+            "rel_path/to/my/dst_path/660/05c/ed21cd\
+58352ee70252/study_20002605/series_CT_125800_NEPHRO--4-0--B40f--M-0-4/2.25.9906061869367\
+4907730262422884187749878.dcm",
         )
     )
     # run for all images
@@ -167,7 +169,7 @@ O  4.0  B40f  M0.4-18678/1-007.dcm",
         os.path.join(
             dst_path,
             "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_CT\
-_125800_UNK/7.dcm",
+_125800_NEPHRO--4-0--B40f--M-0-4/2.25.29709809808460026253134446579710279158.dcm",
         )
     )
 

@@ -8,6 +8,7 @@ from typing import List, Union
 import pydicom
 from bson import ObjectId
 from pyaml_env import parse_config
+from pydicom.errors import BytesLengthException
 from pymongo.errors import DuplicateKeyError
 from tqdm import tqdm
 
@@ -123,10 +124,24 @@ def process_im_meta(
     im_meta = ImageMetadata.from_dict(im_meta_dict)
     # get source file
     src_filepath = im_meta.get_local_filepath(cfg.mount_paths)
-    src_ds = pydicom.read_file(src_filepath)
+    try:
+        src_ds = pydicom.read_file(src_filepath)
+    except Exception as e:
+        logging.error(f"Could not read {im_meta._id} - {e}")
+        return 0
 
-    # pseudonumize
-    deid_ds = cfg.deider.pseudonymize(src_ds)
+    # pseudonymize
+    try:
+        deid_ds = cfg.deider.pseudonymize(src_ds)
+    except ValueError as e:
+        logging.error(f"Could not pseudonymize {im_meta._id} - {e}")
+        return 0
+    except KeyError as e:
+        logging.error(f"Could not pseudonymize {im_meta._id} - {e}")
+        return 0
+    except BytesLengthException as e:
+        logging.error(f"Could not pseudonymize {im_meta._id} - {e}")
+        return 0
 
     # get path where it will be saved
     dst_rel_dir = cfg.dst_rel_dir
