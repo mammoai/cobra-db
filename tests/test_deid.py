@@ -69,3 +69,9 @@ def test_deid_dataset(real_ds: pydicom.Dataset, expected_ds: pydicom.Dataset):
     deider = Deider("AVerySecretSalt", base_recipe_path)
     pseudon_ds = deider.pseudonymize(real_ds)
     assert pseudon_ds.to_json() == expected_ds.to_json()
+
+
+def test_empty_recipe(real_ds: pydicom.Dataset, expected_ds: pydicom.Dataset):
+    deider = Deider("AVerySecretSalt")
+    pseudon_ds = deider.pseudonymize(real_ds)
+    assert pseudon_ds.to_json() == expected_ds.to_json()

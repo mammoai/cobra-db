@@ -44,14 +44,14 @@ class Deider:
         :param hasher_secret_salt: salt for hashing
         """
         bot.level = deid_logging_levels[logging_level]
+        if recipe_path is None:
+            logging.warning(f"DeidDataset using default recipe {base_recipe_path}")
+            recipe_path = base_recipe_path
         if type(recipe_path) == list:
             for r in recipe_path:
                 assert os.path.exists(r), f"Invalid recipe_path: {r}"
         else:
             assert os.path.exists(recipe_path), f"Invalid recipe_path: {recipe_path}"
-        if recipe_path is None:
-            logging.warning(f"DeidDataset using default recipe {base_recipe_path}")
-            recipe_path = base_recipe_path
         self.recipe = DeidRecipe(recipe_path)
         self.hasher = Hasher(hasher_secret_salt)
 
