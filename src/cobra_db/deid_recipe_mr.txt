@@ -1,4 +1,10 @@
-# Addition to the VAI-B pseudonymization recipe to preserve dicom tags relevant to MRI studies.
+# This recipe can **only** act as an addition to the  VAI-B pseudonymization recipe (defined in deid_recipe.txt).
+#
+# It can be used on top of the VAI-B recipe (base) by setting the respecitve variable (mr) in the configuration file:
+# deid_default_recipes:
+#   base: true
+#   mr: true
+
 FORMAT dicom
 
 %header

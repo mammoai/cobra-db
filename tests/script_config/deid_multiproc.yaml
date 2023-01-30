@@ -37,7 +37,8 @@ batch_size: 10
 # number of concurrent processes
 n_proc: 2
 
-# This will use the default recipies in the specified order.
+# This will use the default recipies in the specified order
+# When the default recipes are used the base recipe should be always set to true, and it is optional to enable the mr recipe or not
 deid_default_recipes:
   base: true
   mr: true
