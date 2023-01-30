@@ -3,16 +3,17 @@ import os
 import sys
 from argparse import ArgumentParser, Namespace
 from multiprocessing import Pool
-from typing import List
+from typing import List, Union
 
 import pydicom
 from bson import ObjectId
 from pyaml_env import parse_config
+from pydicom.errors import BytesLengthException
 from pymongo.errors import DuplicateKeyError
 from tqdm import tqdm
 
 from cobra_db.dataset_mod import DatasetMod
-from cobra_db.deid import Deider, default_recipe_path
+from cobra_db.deid import Deider, base_recipe_path, mr_recipe_path
 from cobra_db.filesystem import get_instance_path
 from cobra_db.model import FileSource, ImageMetadata
 from cobra_db.mongo_dao import Connector, ImageMetadataDao
@@ -123,10 +124,24 @@ def process_im_meta(
     im_meta = ImageMetadata.from_dict(im_meta_dict)
     # get source file
     src_filepath = im_meta.get_local_filepath(cfg.mount_paths)
-    src_ds = pydicom.read_file(src_filepath)
+    try:
+        src_ds = pydicom.read_file(src_filepath)
+    except Exception as e:
+        logging.error(f"Could not read {im_meta._id} - {e}")
+        return 0
 
-    # pseudonumize
-    deid_ds = cfg.deider.pseudonymize(src_ds)
+    # pseudonymize
+    try:
+        deid_ds = cfg.deider.pseudonymize(src_ds)
+    except ValueError as e:
+        logging.error(f"Could not pseudonymize {im_meta._id} - {e}")
+        return 0
+    except KeyError as e:
+        logging.error(f"Could not pseudonymize {im_meta._id} - {e}")
+        return 0
+    except BytesLengthException as e:
+        logging.error(f"Could not pseudonymize {im_meta._id} - {e}")
+        return 0
 
     # get path where it will be saved
     dst_rel_dir = cfg.dst_rel_dir
@@ -207,15 +222,27 @@ def query_mux(query, image_ids: List[ObjectId] = None):
     return query
 
 
-def recipe_mux(recipe):
+def recipe_mux(base: bool, mr: bool, recipe: Union[str, List[str]]):
     """Select the correct recipe according to the configurations"""
-    if recipe is None:
-        print(f"Using VAIB recipe from: {default_recipe_path}")
-        return default_recipe_path
-    else:
-        assert os.path.exists(recipe), f"Deid recipe path does not exist: {recipe}"
-        print(f"Using recipe from: {recipe}")
-        return recipe
+    recipes = []
+    if base:
+        print(f"Using VAIB recipe from: {base_recipe_path}")
+        recipes.append(base_recipe_path)
+    if mr:
+        print(
+            f"Using additional to VAIB recipe targeted to MR studies from: {mr_recipe_path}"
+        )
+        recipes.append(mr_recipe_path)
+    if type(recipe) == str:
+        recipes.append(recipe)
+    if type(recipe) == list:
+        recipes = recipes + recipe
+    for r in recipes:
+        assert os.path.exists(r), f"Deid recipe path does not exist: {r}"
+    if len(recipes) == 0:
+        return None
+    logging.info(f"Using recipes: {recipes}")
+    return recipes
 
 
 def main(args=None, image_ids: List[ObjectId] = None):
@@ -243,7 +270,11 @@ def main(args=None, image_ids: List[ObjectId] = None):
 
     cfg.deider = Deider(
         cfg.hash_secret,
-        recipe_mux(cfg.deid_recipe_path),
+        recipe_mux(
+            cfg.deid_default_recipes["base"],
+            cfg.deid_default_recipes["mr"],
+            cfg.user_recipe_path,
+        ),
         logging_level=cfg.logging_level,
     )
 

@@ -5,13 +5,17 @@ import numpy as np
 import pydicom
 import pytest
 from dotenv import load_dotenv
+from copy import copy
 
 from cobra_db.mongo_dao import Connector
 from cobra_db.scripts.pseudonymize_image_metadata import (
+    base_recipe_path,
     check_mount_paths,
     get_required_drive_names,
     main,
+    mr_recipe_path,
     parse_arguments,
+    recipe_mux,
 )
 
 
@@ -38,6 +42,12 @@ def cfg():
     return cfg
 
 
+@pytest.fixture(scope="module")
+def extra_recipe():
+    pwd = os.path.dirname(__file__)
+    return os.path.join(pwd, "script_config/recipe_1.txt")
+
+
 def test_get_required_drive_names(cfg):
     assert get_required_drive_names(cfg.src_mongo, {})[0] == ["PseudoPHI"]
 
@@ -48,6 +58,24 @@ def test_missing_drives(cfg):
     assert (
         exc_info.value.args[0] == "Missing configuration for drive_names: {'PseudoPHI'}"
     )
+
+
+@pytest.mark.parametrize(
+    "config,expected",
+    (
+        ({"base": False, "mr": True, "recipe": list}, [mr_recipe_path]),
+        ({"base": True, "mr": False, "recipe": str}, [base_recipe_path]),
+    ),
+)
+def test_recipe_mux(config, expected: list, extra_recipe):
+    expected.append(extra_recipe)
+    config = copy(config)
+    if config["recipe"] == list:
+        config["recipe"] = [extra_recipe]
+    elif config['recipe'] == str:
+        config['recipe'] = extra_recipe
+    result = recipe_mux(**config)
+    assert result == expected
 
 
 @pytest.mark.slow
@@ -79,8 +107,9 @@ def test_main(cfg):
     assert os.path.exists(
         os.path.join(
             dst_path,
-            "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_\
-CT_125800_UNK/13.dcm",
+            "rel_path/to/my/dst_path/660/05c/ed21cd\
+58352ee70252/study_20002605/series_CT_125800_NEPHRO--4-0--B40f--M-0-4/2.25.9906061869367\
+4907730262422884187749878.dcm",
         )
     )
     # run for all images
@@ -105,7 +134,7 @@ O  4.0  B40f  M0.4-18678/1-007.dcm",
         os.path.join(
             dst_path,
             "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_CT\
-_125800_UNK/7.dcm",
+_125800_NEPHRO--4-0--B40f--M-0-4/2.25.29709809808460026253134446579710279158.dcm",
         )
     )
 
@@ -141,8 +170,9 @@ def test_main_multiproc(cfg):
     assert os.path.exists(
         os.path.join(
             dst_path,
-            "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_\
-CT_125800_UNK/13.dcm",
+            "rel_path/to/my/dst_path/660/05c/ed21cd\
+58352ee70252/study_20002605/series_CT_125800_NEPHRO--4-0--B40f--M-0-4/2.25.9906061869367\
+4907730262422884187749878.dcm",
         )
     )
     # run for all images
@@ -167,7 +197,7 @@ O  4.0  B40f  M0.4-18678/1-007.dcm",
         os.path.join(
             dst_path,
             "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20002605/series_CT\
-_125800_UNK/7.dcm",
+_125800_NEPHRO--4-0--B40f--M-0-4/2.25.29709809808460026253134446579710279158.dcm",
         )
     )
 

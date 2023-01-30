@@ -2,6 +2,7 @@ import logging
 import os
 from copy import deepcopy
 from datetime import datetime
+from typing import List, Union
 
 import pydicom
 from deid.config import DeidRecipe
@@ -11,7 +12,8 @@ from deid.logger import bot
 from cobra_db.encrypt import Hasher
 from cobra_db.utils import parse_AS_as_int
 
-default_recipe_path = os.path.join(os.path.dirname(__file__), "deid_recipe.txt")
+base_recipe_path = os.path.join(os.path.dirname(__file__), "deid_recipe.txt")
+mr_recipe_path = os.path.join(os.path.dirname(__file__), "deid_recipe_mr.txt")
 
 deid_logging_levels = dict(
     ABORT=-5,
@@ -33,7 +35,7 @@ class Deider:
     def __init__(
         self,
         hasher_secret_salt: str,
-        recipe_path: str = None,
+        recipe_path: Union[str, List] = None,
         logging_level: str = "ERROR",
     ):
         """Deidentify datasets according to vaib recipe
@@ -42,10 +44,14 @@ class Deider:
         :param hasher_secret_salt: salt for hashing
         """
         bot.level = deid_logging_levels[logging_level]
-        assert os.path.exists(recipe_path), f"Invalid recipe_path: {recipe_path}"
         if recipe_path is None:
-            logging.warning(f"DeidDataset using default recipe {default_recipe_path}")
-            recipe_path = default_recipe_path
+            logging.warning(f"DeidDataset using default recipe {base_recipe_path}")
+            recipe_path = base_recipe_path
+        if type(recipe_path) == list:
+            for r in recipe_path:
+                assert os.path.exists(r), f"Invalid recipe_path: {r}"
+        else:
+            assert os.path.exists(recipe_path), f"Invalid recipe_path: {recipe_path}"
         self.recipe = DeidRecipe(recipe_path)
         self.hasher = Hasher(hasher_secret_salt)
 

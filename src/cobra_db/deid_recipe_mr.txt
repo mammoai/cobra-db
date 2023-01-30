@@ -1,0 +1,101 @@
+# This recipe can **only** act as an addition to the  VAI-B pseudonymization recipe (defined in deid_recipe.txt).
+#
+# It can be used on top of the VAI-B recipe (base) by setting the respecitve variable (mr) in the configuration file:
+# deid_default_recipes:
+#   base: true
+#   mr: true
+
+FORMAT dicom
+
+%header
+
+ADD PatientIdentityRemoved Yes
+ADD DeidentificationMethod mr_deid_v1.0.0
+
+# Tags removed by deid_recipe.txt and brought back for MR
+KEEP ProtocolName
+KEEP ReferencedImageSequence
+KEEP ReferencedPerformedProcedureStepSequence
+KEEP SeriesDescription
+
+# Addional new tags
+KEEP AcquisitionMatrix
+KEEP AcquisitionNumber
+KEEP AngioFlag
+KEEP BitsAllocated
+KEEP BitsStored
+KEEP CardiacNumberOfImages
+KEEP CodeMeaning
+KEEP CodeValue
+KEEP CodingSchemeDesignator
+KEEP Columns
+KEEP DeidentificationMethod
+KEEP DeidentificationMethodCodeSequence
+KEEP DiffusionBValue
+KEEP EchoNumbers
+KEEP EchoTime
+KEEP EchoTrainLength
+KEEP EffectiveEchoTime
+KEEP FileMetaInformationGroupLength
+KEEP FileMetaInformationVersion
+KEEP FlipAngle
+KEEP HighBit
+KEEP ImageOrientationPatient
+KEEP ImagePositionPatient
+KEEP ImageType
+KEEP ImagedNucleus
+KEEP ImagesInAcquisition
+KEEP ImagingFrequency
+KEEP ImplementationClassUID
+KEEP ImplementationVersionName
+KEEP InPlanePhaseEncodingDirection
+KEEP InStackPositionNumber
+KEEP InstanceNumber
+KEEP InversionTime
+KEEP LargestImagePixelValue
+KEEP Laterality
+KEEP MRAcquisitionType
+KEEP MRDiffusionSequence
+KEEP MREchoSequence
+KEEP MRFOVGeometrySequence
+KEEP MagneticFieldStrength
+KEEP Manufacturer
+KEEP ManufacturerModelName
+KEEP MediaStorageSOPClassUID
+KEEP Modality
+KEEP NumberOfAverages
+KEEP NumberOfTemporalPositions
+KEEP PatientPosition
+KEEP PercentPhaseFieldOfView
+KEEP PercentSampling
+KEEP PhotometricInterpretation
+KEEP PixelBandwidth
+KEEP PixelRepresentation
+KEEP PixelSpacing
+KEEP PlanarConfiguration
+KEEP PositionReferenceIndicator
+KEEP ReceiveCoilName
+KEEP ReconstructionDiameter
+KEEP ReferencedSOPClassUID
+KEEP RepetitionTime
+KEEP Rows
+KEEP SAR
+KEEP SOPClassUID
+KEEP SamplesPerPixel
+KEEP ScanOptions
+KEEP ScanningSequence
+KEEP SequenceVariant
+KEEP SeriesNumber
+KEEP SliceLocation
+KEEP SliceThickness
+KEEP SmallestImagePixelValue
+KEEP SoftwareVersions
+KEEP SpacingBetweenSlices
+KEEP SpecificCharacterSet
+KEEP StackID
+KEEP TemporalPositionIdentifier
+KEEP TransferSyntaxUID
+KEEP TriggerWindow
+KEEP VariableFlipAngleFlag
+KEEP WindowCenter
+KEEP WindowWidth

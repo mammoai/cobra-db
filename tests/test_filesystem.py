@@ -3,7 +3,7 @@ import os
 import pytest
 from pydicom import read_file
 
-from cobra_db.deid import Deider, default_recipe_path
+from cobra_db.deid import Deider, base_recipe_path
 from cobra_db.filesystem import get_instance_path
 
 DICOM_PATH = "dicom_data/6774825273/09-11-2013-NA-XR CHEST AP PORTABLE for Scott Kaufman\
@@ -19,7 +19,7 @@ def real_ds():
 
 @pytest.fixture
 def deid_ds(real_ds):
-    deider = Deider("VerySecretSalt", default_recipe_path)
+    deider = Deider("VerySecretSalt", base_recipe_path)
     return deider.pseudonymize(real_ds)
 
 
@@ -27,7 +27,8 @@ def test_get_instance_path(real_ds, deid_ds):
     with pytest.raises(AssertionError) as exc_info:
         get_instance_path(real_ds)
     assert exc_info.value.args[0] == "Length of patient hash is incorrect"
-    expected = "e18/2ce/29b495df648d52d1eb/study_20131109/series_CT_162723_UNK/1.dcm"
+    expected = "e18/2ce/29b495df648d52d1eb/study_20131109/series_CT_162723_UNK/\
+2.25.67591592645229809873011613207677746678.dcm"
     assert get_instance_path(deid_ds) == expected
 
 
@@ -38,6 +39,10 @@ def test_missing_PatientID():
     ds = read_file(data_path, stop_before_pixels=True)
     tag = ds.data_element("PatientID").tag
     del ds[tag]
-    deider = Deider("VerySecretSalt", default_recipe_path)
+    deider = Deider("VerySecretSalt", base_recipe_path)
     expected_path = get_instance_path(deider.pseudonymize(ds))
-    assert expected_path == "UNK_PatientID/study_20040604/series_CR_054409_UNK/1001.dcm"
+    assert (
+        expected_path
+        == "UNK_PatientID/study_20040604/series_CR_054409_UNK/\
+2.25.303864294545422142998623082114092482038.dcm"
+    )

@@ -1,7 +1,7 @@
 import pydicom
 import pytest
 
-from cobra_db.deid import Deider, default_recipe_path
+from cobra_db.deid import Deider, base_recipe_path
 
 
 @pytest.fixture
@@ -53,7 +53,7 @@ def expected_ds():
             "00100040": {"Value": ["F"], "vr": "CS"},
             "00101010": {"Value": ["030Y"], "vr": "AS"},
             "00120062": {"Value": ["Yes"], "vr": "CS"},
-            "00120063": {"Value": ["vaib_deid_v1.0.0"], "vr": "LO"},
+            "00120063": {"Value": ["vaib_deid_v1.0.1"], "vr": "LO"},
             "00200010": {
                 "Value": [
                     "fde000d590d076679bc13cb5ef1621ce8437f3e0512ea96d0404235f06f971d5"
@@ -66,6 +66,12 @@ def expected_ds():
 
 def test_deid_dataset(real_ds: pydicom.Dataset, expected_ds: pydicom.Dataset):
 
-    deider = Deider("AVerySecretSalt", default_recipe_path)
+    deider = Deider("AVerySecretSalt", base_recipe_path)
+    pseudon_ds = deider.pseudonymize(real_ds)
+    assert pseudon_ds.to_json() == expected_ds.to_json()
+
+
+def test_empty_recipe(real_ds: pydicom.Dataset, expected_ds: pydicom.Dataset):
+    deider = Deider("AVerySecretSalt")
     pseudon_ds = deider.pseudonymize(real_ds)
     assert pseudon_ds.to_json() == expected_ds.to_json()

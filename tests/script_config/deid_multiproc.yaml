@@ -37,8 +37,15 @@ batch_size: 10
 # number of concurrent processes
 n_proc: 2
 
-# deid recipe path. How to deidentify the images. Set to null if default is to be used
-deid_recipe_path: null
+# This will use the default recipies in the specified order
+# When the default recipes are used the base recipe should be always set to true, and it is optional to enable the mr recipe or not
+deid_default_recipes:
+  base: true
+  mr: true
+# user deid recipe path(s). How to deidentify the images. Set to null if default is to be used
+# Latest in the list overrides the earlier
+# https://deid.readthedocs.io/en/latest/source/deid.config.html#deid.config.DeidRecipe
+user_recipe_path: []
 
 # logging config
 logging_dir: null
