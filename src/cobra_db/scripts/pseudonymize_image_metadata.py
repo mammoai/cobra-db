@@ -3,7 +3,7 @@ import os
 import sys
 from argparse import ArgumentParser, Namespace
 from multiprocessing import Pool
-from typing import List
+from typing import List, Union
 
 import pydicom
 from bson import ObjectId
@@ -12,7 +12,7 @@ from pymongo.errors import DuplicateKeyError
 from tqdm import tqdm
 
 from cobra_db.dataset_mod import DatasetMod
-from cobra_db.deid import Deider, default_recipe_path
+from cobra_db.deid import Deider, base_recipe_path, mr_recipe_path
 from cobra_db.filesystem import get_instance_path
 from cobra_db.model import FileSource, ImageMetadata
 from cobra_db.mongo_dao import Connector, ImageMetadataDao
@@ -207,15 +207,27 @@ def query_mux(query, image_ids: List[ObjectId] = None):
     return query
 
 
-def recipe_mux(recipe):
+def recipe_mux(base: bool, mr: bool, recipe: Union[str, List[str]]):
     """Select the correct recipe according to the configurations"""
-    if recipe is None:
-        print(f"Using VAIB recipe from: {default_recipe_path}")
-        return default_recipe_path
-    else:
-        assert os.path.exists(recipe), f"Deid recipe path does not exist: {recipe}"
-        print(f"Using recipe from: {recipe}")
-        return recipe
+    recipes = []
+    if base:
+        print(f"Using VAIB recipe from: {base_recipe_path}")
+        recipes.append(base_recipe_path)
+    if mr:
+        print(
+            f"Using additional to VAIB recipe targeted to MR studies from: {mr_recipe_path}"
+        )
+        recipes.append(mr_recipe_path)
+    if type(recipe) == str:
+        recipes.append(recipe)
+    if type(recipe) == list:
+        recipes = recipes + recipe
+    for r in recipes:
+        assert os.path.exists(r), f"Deid recipe path does not exist: {r}"
+    if len(recipes) == 0:
+        return None
+    logging.info(f"Using recipes: {recipes}")
+    return recipes
 
 
 def main(args=None, image_ids: List[ObjectId] = None):
@@ -243,7 +255,11 @@ def main(args=None, image_ids: List[ObjectId] = None):
 
     cfg.deider = Deider(
         cfg.hash_secret,
-        recipe_mux(cfg.deid_recipe_path),
+        recipe_mux(
+            cfg.deid_default_recipes["base"],
+            cfg.deid_default_recipes["mr"],
+            cfg.user_recipe_path,
+        ),
         logging_level=cfg.logging_level,
     )
 

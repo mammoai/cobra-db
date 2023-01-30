@@ -1,7 +1,7 @@
 import pydicom
 import pytest
 
-from cobra_db.deid import Deider, default_recipe_path
+from cobra_db.deid import Deider, base_recipe_path
 
 
 @pytest.fixture
@@ -66,6 +66,6 @@ def expected_ds():
 
 def test_deid_dataset(real_ds: pydicom.Dataset, expected_ds: pydicom.Dataset):
 
-    deider = Deider("AVerySecretSalt", default_recipe_path)
+    deider = Deider("AVerySecretSalt", base_recipe_path)
     pseudon_ds = deider.pseudonymize(real_ds)
     assert pseudon_ds.to_json() == expected_ds.to_json()
