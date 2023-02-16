@@ -267,11 +267,14 @@ class RadiologicalStudy(DicomEntity):
     date: datetime  # (0008,0020) DA StudyDate + (0008,0030) TM StudyTime
     series_count: int  # (0020,0011) IS SeriesNumber, Overriden after grouping because
     # the tags are not reliable.
-    modality: List[Modality] = None  # (0008,0060) CS Modality
-    # SOPClassUID, the meaning can be found in pydicom._uid_dict.UID_dictionaty
-    sop_class: List[str] = None
-    description: str = None  # (0008,1030) LO StudyDescription
     patient_id: ObjectId = None
+    # SOPClassUID, the meaning can be found in pydicom._uid_dict.UID_dictionaty
+
+    # Tags that we want to keep even if the images in the same patient+date disagree.
+
+    sop_class: List[str] = None
+    modality: List[Modality] = None  # (0008,0060) CS Modality
+    description: str = None  # (0008,1030) LO StudyDescription
     accession_number: List[
         str
     ] = None  # Used to link the study with other administrative registers.
@@ -279,6 +282,14 @@ class RadiologicalStudy(DicomEntity):
     patient_weight: float = None  # (0010,1030) PatientWeight
     patient_height: float = None  # (0010,1020) PatientSize
     patient_pregnancy_status: PregnancyStatus = None  # (0010,21C0)
+    manufacturer: List[str] = None
+    manufacturer_model_name: List[str] = None
+    detector_id: List[str] = None
+    detector_type: List[str] = None
+    device_serial_number: List[str] = None
+    software_versions: List[str] = None
+    date_of_last_detector_calibration: List[str] = None
+    breast_implant_present: List[str] = None
 
     def __repr__(self):
         return super().__repr__()
@@ -310,8 +321,18 @@ class RadiologicalStudy(DicomEntity):
             patient_pregnancy_status=(
                 cls.optional(ds, "PatientPregnancyStatus", PregnancyStatus, None)
             ),
-            series_count=cls.optional(ds, "SeriesNumber", int, None),
             dicom_tags=DatasetMod.tags_to_keywords(ds.to_json_dict()),
+
+            # The ones below all get overriden while grouping
+            series_count=cls.optional(ds, "SeriesNumber", int, None),
+            manufacturer = cls.optional(ds, "Manufacturer", str, None),
+            manufacturer_model_name = cls.optional(ds, "ManufacturerModelName", str, None),
+            detector_id = cls.optional(ds, "DetectorID", str, None),
+            detector_type = cls.optional(ds, "DetectorType", str, None),
+            device_serial_number = cls.optional(ds, "DeviceSerialNumber", str, None),
+            software_versions = cls.optional(ds, "SoftwareVersions", None, None),
+            date_of_last_detector_calibration = cls.optional(ds, "DateOfLastDetectorCalibration", parse_DA_as_datetime, None),
+            breast_implant_present = cls.optional(ds, "BreastImplantPresent", str, None)
         )
 
     @classmethod

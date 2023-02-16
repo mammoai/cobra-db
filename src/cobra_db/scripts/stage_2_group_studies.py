@@ -38,10 +38,21 @@ def proto_study_generator(connector_kwargs):
 
 def get_tag(d, keyword):
     try:
-        return d[keyword]["Value"][0]
+        v = d[keyword]["Value"]
+        if isinstance(v, list):
+            return set(v)
+        else:
+            return set([v])
     except KeyError:
-        return None
+        return set()
 
+def set_union(dicom_tags:List[dict], keyword):
+    values = set()
+    for d in dicom_tags:
+        values = values.union(get_tag(d, keyword))
+    if len(values) == 0:
+        return None
+    return list(values)
 
 def group_study(images: List[dict], project_name: str) -> RadiologicalStudy:
     """Takes the dict of many ImageMetadata instances.
@@ -55,9 +66,6 @@ def group_study(images: List[dict], project_name: str) -> RadiologicalStudy:
     intersection = intersect_dicts_allow_empty_minority(dicom_tags)
     shared_ds_dict = DatasetMod.keywords_to_tags(intersection)
     shared_ds = Dataset.from_json(shared_ds_dict)
-    series_uids = set([get_tag(x, "SeriesInstanceUID") for x in dicom_tags])
-    study_uids = set([get_tag(x, "StudyInstanceUID") for x in dicom_tags])
-    accession_numbers = set([get_tag(x, "AccessionNumber") for x in dicom_tags])
     try:
         study = RadiologicalStudy.from_dataset(shared_ds)
     except ValueError as e:
@@ -66,17 +74,26 @@ def group_study(images: List[dict], project_name: str) -> RadiologicalStudy:
     {get_tag(dicom_tags[0], 'PatientID')}-{get_tag(dicom_tags[0], 'StudyDate')}, e:{e}"
         )
         return None
-    study.series_count = len(series_uids)
-    study.modality = list(
-        set([get_tag(x, "Modality") for x in dicom_tags if get_tag(x, "Modality")])
-    )
-    study.sop_class = list(
-        set(
-            [get_tag(x, "SOPClassUID") for x in dicom_tags if get_tag(x, "SOPClassUID")]
-        )
-    )
-    study.study_uid = list(study_uids)
-    study.accession_number = list(accession_numbers)
+
+    union_keywords = {
+        'study_uids': "StudyInstanceUID", 
+        "accession_number": "AccessionNumber",
+        "modality": "Modality",
+        "sop_class": "SOPClassUID",
+        "manufacturer": "Manufacturer",
+        "manufacturer_model_name": "ManufacturerModelName",
+        "detector_id": "DetectorID",
+        "detector_type": "DetectorType",
+        "device_serial_number": "DeviceSerialNumber",
+        "software_versions": "SoftwareVersions",
+        "date_of_last_detector_calibration": "DateOfLastDetectorCalibration",
+        'breast_implant_present': "BreastImplantPresent",
+    }
+    for attr_name, keyword in union_keywords.items():
+        setattr(study, attr_name, set_union(dicom_tags, keyword))
+    
+    
+    study.series_count = len(set_union(dicom_tags, "SeriesInstanceUID"))
     study._metadata.project_name = project_name
     return study
 
