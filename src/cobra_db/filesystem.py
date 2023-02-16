@@ -32,7 +32,7 @@ def get_study_path(patient_anon_id: str, study_date: datetime):
     if study_date is None:
         study_date = datetime(1900, 1, 1)
     return os.path.join(
-        get_patient_path(patient_anon_id), f'study_{study_date.strftime("%Y%d%m")}'
+        get_patient_path(patient_anon_id), f'study_{study_date.strftime("%Y%m%d")}'
     )
 
 

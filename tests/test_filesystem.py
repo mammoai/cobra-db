@@ -27,7 +27,7 @@ def test_get_instance_path(real_ds, deid_ds):
     with pytest.raises(AssertionError) as exc_info:
         get_instance_path(real_ds)
     assert exc_info.value.args[0] == "Length of patient hash is incorrect"
-    expected = "e18/2ce/29b495df648d52d1eb/study_20131109/series_CT_162723_UNK/\
+    expected = "e18/2ce/29b495df648d52d1eb/study_20130911/series_CT_162723_UNK/\
 2.25.67591592645229809873011613207677746678.dcm"
     assert get_instance_path(deid_ds) == expected
 
@@ -43,6 +43,6 @@ def test_missing_PatientID():
     expected_path = get_instance_path(deider.pseudonymize(ds))
     assert (
         expected_path
-        == "UNK_PatientID/study_20040604/series_CR_054409_UNK/\
+        == "UNK_PatientID/study_20040406/series_CR_054409_UNK/\
 2.25.303864294545422142998623082114092482038.dcm"
     )
