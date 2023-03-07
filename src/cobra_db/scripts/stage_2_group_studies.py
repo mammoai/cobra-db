@@ -76,7 +76,7 @@ def group_study(images: List[dict], project_name: str) -> RadiologicalStudy:
         return None
 
     union_keywords = {
-        'study_uids': "StudyInstanceUID", 
+        'study_uid': "StudyInstanceUID", 
         "accession_number": "AccessionNumber",
         "modality": "Modality",
         "sop_class": "SOPClassUID",
