@@ -3,9 +3,8 @@ import os
 import pytest
 from dotenv import load_dotenv
 
-from cobra_db.mongo_dao import Connector
+from cobra_db.mongo_dao import Connector, StudyDao, SeriesDao
 from cobra_db.scripts.stage_2 import main, parse_arguments
-
 
 def test_parse_args():
     raw_args = "\
@@ -50,7 +49,16 @@ def test_single_proc():
     # Start the test
     main(connector_kwargs, n_proc, project_name)
 
+    # check that it is possible to load one study directly
+    study_dao = StudyDao(connector)
+    study_id = study_dao.collection.find_one({}, {"_id":1})["_id"]
+    study = study_dao.get_by_id(study_id)
 
+    # check that it is possible to load one series directly
+    series_dao = SeriesDao(connector)
+    series_id = series_dao.collection.find_one({}, {"_id":1})["_id"]
+    series = series_dao.get_by_id(series_id)
+  
 # def test_multi_proc():
 #     pwd = os.path.dirname(__file__)
 #     dotenv_path = os.path.join(pwd, ".env")
