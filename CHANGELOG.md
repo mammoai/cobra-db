@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.1 (2023-03-08)
+
+
 ## v0.2.0 (2023-03-07)
 ### Feature
 * Update RadiologicalStudy data model ([`d5cc57a`](https://github.com/mammoai/cobra-db/commit/d5cc57ab4b12e820d725e0b721f2e79f97811866))
