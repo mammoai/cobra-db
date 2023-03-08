@@ -41,6 +41,8 @@ class Connector:
         db_name: str,
         username: str = None,
         password: str = None,
+        tls: bool = True,
+        **kwargs
     ):
         """Create a new instance of the Connector.
         Remember that passwords should not be stored in plain text and
@@ -60,6 +62,8 @@ class Connector:
         self.db_name = db_name
         self.username = username
         self.password = password
+        self.tls = tls
+        self.kwargs = kwargs
         self.connect()
 
     def connect(self):
@@ -70,6 +74,8 @@ class Connector:
             self._get_uri(self.host, self.port, self.username, self.password),
             serverSelectionTimeoutMS=5000,
             connectTimeoutMS=5000,
+            tls=self.tls,
+            **kwargs
         )
 
         self.db = self.client[self.db_name]
