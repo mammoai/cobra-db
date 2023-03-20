@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.2 (2023-03-20)
+### Documentation
+* **update:** VAI-B paper DOI ([`aaf6dec`](https://github.com/mammoai/cobra-db/commit/aaf6dec391755d648b0e226b8b0abcccd70a147b))
+* DOI badge in README ([`3cf1b7a`](https://github.com/mammoai/cobra-db/commit/3cf1b7ae7528109bb8a3fa45d12877a9303055d3))
+
 ## v0.2.1 (2023-03-08)
 
 
