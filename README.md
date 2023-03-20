@@ -4,6 +4,7 @@
 
 <center>
 
+[![DOI:10.1117/1.JMI.10.6.061404](https://zenodo.org/badge/DOI/10.1117/1.JMI.10.6.061404.svg)](https://doi.org/10.1117/1.JMI.10.6.061404)
 [![PyPI version](https://badge.fury.io/py/cobra_db.svg)](https://badge.fury.io/py/cobra_db)
 [![Documentation Status](https://readthedocs.org/projects/cobra-db/badge/?version=latest)](https://cobra-db.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/mammoai/cobra-db/branch/main/graph/badge.svg?token=ASQPS89408)](https://codecov.io/gh/mammoai/cobra-db)
@@ -12,7 +13,6 @@
 
 **Co**nsolidated **Br**east Cancer **A**nalysis **D**ata**B**ase
 </center>
-
 
 
 
