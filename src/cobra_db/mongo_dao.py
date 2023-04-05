@@ -201,6 +201,7 @@ class PatientDao(EntityDao):
     Get or insert patient from / to the database
     (Manages access to the Patient collection in MongoDB)
     """
+
     def __init__(self, connector):
         super().__init__(connector, Patient)
         self._index_exists = False
@@ -295,11 +296,11 @@ class PatientDao(EntityDao):
 
 
 class StudyDao(EntityDao):
-    '''
+    """
     Get or insert RadiologicalStudy from / to the database
     (Manages access to the RadiologicalStudy collection in MongoDB)
-    '''
-    
+    """
+
     def __init__(self, connector):
         super().__init__(connector, RadiologicalStudy)
         self.patient_dao = PatientDao(connector)
@@ -384,10 +385,11 @@ class StudyDao(EntityDao):
 
 
 class SeriesDao(EntityDao):
-    '''
+    """
     Get or insert RadiologicalSeries from / to the database
     (Manages access to the RadiologicalSeries collection in MongoDB)
-    '''
+    """
+
     def __init__(self, connector):
         super().__init__(connector, RadiologicalSeries)
         self.study_dao = StudyDao(connector)
@@ -469,10 +471,11 @@ class SeriesDao(EntityDao):
 
 
 class ImageMetadataDao(EntityDao):
-    '''
-    Get or insert an instance of ImageMetadata (ImageMetadata collection) from / to the database
+    """
+    Get or insert an instance of ImageMetadata from / to the database
     (Manages access to the ImageMetadata collection in MongoDB)
-    '''
+    """
+
     def __init__(self, connector):
         super().__init__(connector, ImageMetadata)
         self.series_dao = SeriesDao(connector)
@@ -559,4 +562,3 @@ class ImageMetadataDao(EntityDao):
                 },
             },
         )
-    

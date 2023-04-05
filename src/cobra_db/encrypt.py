@@ -35,7 +35,7 @@ class PersonalNumberValidator:
         At least with this information we can try to modify one side or the other of the
         matching to fix it.
         """
-        
+
         validity = PersonalNumberValidity.NOT_VALID
         # check for characters outside 0-9
         p = personal_number
@@ -50,10 +50,10 @@ class PersonalNumberValidator:
             # make it short since the other two digits are not used in the checksum
             personal_number = personal_number[2:]
         else:
-            return validity # must be either 10 or 12 digit to continue
+            return validity  # must be either 10 or 12 digit to continue
 
         try:  # parse the date to and raise errors if something wrong
-            date = datetime.strptime(personal_number[:6], "%y%m%d")
+            datetime.strptime(personal_number[:6], "%y%m%d")
             validity = validity | PersonalNumberValidity.DATE
         except ValueError:
             pass  # the date could not be parsed
@@ -65,7 +65,7 @@ class PersonalNumberValidator:
         except ValueError:
             pass  # could not compute checksum
         except IndexError:
-            pass 
+            pass
 
         return validity
 
