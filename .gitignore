@@ -143,6 +143,5 @@ dmypy.json
 .vscode/settings.json
 tests/tmp/
 
-# jupyter (delete)
 docs/jupyter_execute
 .ipynb_checkpoints
