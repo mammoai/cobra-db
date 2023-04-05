@@ -296,7 +296,7 @@ class PatientDao(EntityDao):
 
 class StudyDao(EntityDao):
     '''
-    Get or insert study from / to the database
+    Get or insert RadiologicalStudy from / to the database
     (Manages access to the Study collection in MongoDB)
     '''
     
@@ -385,7 +385,7 @@ class StudyDao(EntityDao):
 
 class SeriesDao(EntityDao):
     '''
-    Get or insert series from / to the database
+    Get or insert RadiologicalSeries from / to the database
     (Manages access to the Series collection in MongoDB)
     '''
     def __init__(self, connector):
@@ -470,7 +470,7 @@ class SeriesDao(EntityDao):
 
 class ImageMetadataDao(EntityDao):
     '''
-    Get or insert image from / to the database
+    Get or insert image metadata from / to the database
     (Manages access to the Image collection in MongoDB)
     '''
     def __init__(self, connector):
