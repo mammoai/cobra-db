@@ -470,7 +470,7 @@ class SeriesDao(EntityDao):
 
 class ImageMetadataDao(EntityDao):
     '''
-    Get or insert image metadata from / to the database
+    Get or insert an instance of ImageMetadata from / to the database
     (Manages access to the Image collection in MongoDB)
     '''
     def __init__(self, connector):
