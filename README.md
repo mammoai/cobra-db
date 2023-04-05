@@ -81,7 +81,7 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 
 ## License
 
-`cobra_db` was created by Fernando Cossio, Apostolia Tsirikoglou, Annika Gregoorian, Haiko Schurz, Hui Li and Fredrik Strand. It is licensed under the terms of the Apache License 2.0 license.
+`cobra_db` was created by Fernando Cossio, Apostolia Tsirikoglou, Annika Gregoorian, Haiko Schurz, Hui Li, and Fredrik Strand. It is licensed under the terms of the Apache License 2.0 license.
 
 ## Aknowledgements
 
