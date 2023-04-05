@@ -198,8 +198,7 @@ class EntityDao:
 
 class PatientDao(EntityDao):
     """
-    Get / insert datainfo in Patient level
-    Each Patient is the Studies with same Patient
+    Get or insert patient from / to the database
     (Manages access to the Patient collection in MongoDB)
     """
     def __init__(self, connector):
@@ -297,8 +296,7 @@ class PatientDao(EntityDao):
 
 class StudyDao(EntityDao):
     '''
-    Get / insert datainfo in Study level
-    Each Study is the Series with same Patient_Date
+    Get or insert study from / to the database
     (Manages access to the Study collection in MongoDB)
     '''
     
@@ -387,8 +385,7 @@ class StudyDao(EntityDao):
 
 class SeriesDao(EntityDao):
     '''
-    Get / insert datainfo in Series level
-    Each Series is the images with the same scaning machine.  (i.g. MR, CT, mammography) 
+    Get or insert series from / to the database
     (Manages access to the Series collection in MongoDB)
     '''
     def __init__(self, connector):
@@ -473,8 +470,7 @@ class SeriesDao(EntityDao):
 
 class ImageMetadataDao(EntityDao):
     '''
-    Get / insert datainfo in Image level
-    Each image is a single image
+    Get or insert image from / to the database
     (Manages access to the Image collection in MongoDB)
     '''
     def __init__(self, connector):
@@ -563,6 +559,4 @@ class ImageMetadataDao(EntityDao):
                 },
             },
         )
-
-
-#13-docsajsjs
+    
