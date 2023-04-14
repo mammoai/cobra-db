@@ -2,7 +2,7 @@
 name = "cobra_db"
 version = "0.2.3"
 description = "COnsolidated BReast cancer Analysis DataBase"
-authors = ["Fernando Cossio", "Apostolia Tsirikoglou", "Haiko Schurz", "Fredrik Strand"]
+authors = ["Fernando Cossio", "Apostolia Tsirikoglou", "Haiko Schurz", "Hui Li", "Fredrik Strand"]
 license = "Apache License 2.0"
 readme = "README.md"
 include = ["src/cobra_db/deid_recipe.txt"]
