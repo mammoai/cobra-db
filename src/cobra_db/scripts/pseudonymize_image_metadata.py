@@ -19,6 +19,8 @@ from cobra_db.model import FileSource, ImageMetadata
 from cobra_db.mongo_dao import Connector, ImageMetadataDao
 from cobra_db.scripts.utils import add_args_to_iterable, batcher
 
+from time import sleep
+
 
 def parse_arguments(raw_args: List[str]) -> str:
     """Parse the arguments for the pseudonymization process
@@ -119,7 +121,11 @@ def process_batch(args):
 
 
 def process_im_meta(
-    im_meta_dict: dict, cfg, src_im_dao: ImageMetadataDao, dst_im_dao: ImageMetadataDao
+    im_meta_dict: dict,
+    cfg,
+    src_im_dao: ImageMetadataDao,
+    dst_im_dao: ImageMetadataDao,
+    retries=10,
 ):
     im_meta = ImageMetadata.from_dict(im_meta_dict)
     # get source file
@@ -161,6 +167,16 @@ def process_im_meta(
         pydicom.write_file(dst_filepath, deid_ds)
     except ValueError as e:
         logging.error(f"{e}")
+    except OSError as e:
+        print(f"{e} - {dst_filepath}")
+        if retries > 0:
+            sleep(2)
+            print(f"Retrying now, {r} retries left - {dst_filepath}")
+            r = retries - 1
+            return process_im_meta(im_meta_dict, cfg, src_im_dao, dst_im_dao, r)
+        print(
+            f"Unknown OS error, could not fix by retrying, will not write - {dst_filepath}"
+        )
 
     # the _id of the dataset is stored with the same database _id so that a super user
     # with access to both collections, can quickly check that everything is okay.
@@ -185,6 +201,7 @@ def get_required_drive_names(src_mongo, query):
     connector = Connector(**src_mongo)
     im_dao = ImageMetadataDao(connector)
     logging.info("Searching images to obtain required drives for query")
+    print(f"Running query: {query}")
     cursor = im_dao.collection.aggregate(
         [{"$match": query}, {"$sortByCount": "$file_source.drive_name"}]
     )
@@ -261,7 +278,9 @@ def main(args=None, image_ids: List[ObjectId] = None):
     check_mount_paths(cfg.mount_paths, required_drive_names, cfg.dst_drive_name)
     im_meta_gen = im_meta_generator(cfg.src_mongo, cfg.query)
     logging.info("Saving list of files to be processed")
-    imgs = list(im_meta_gen)  # save as list to avoid losing the
+    imgs = list(
+        tqdm(im_meta_gen, desc="Reading list of files to be processed")
+    )  # save as list to avoid losing the cursor
     batches = batcher(imgs, batch_size=cfg.batch_size)
 
     # Due to a weird configuration system of the deid library this has to be loaded
@@ -279,8 +298,8 @@ def main(args=None, image_ids: List[ObjectId] = None):
     )
 
     batches = add_args_to_iterable(batches, cfg)
-    pbar_seen = tqdm(total=total_imgs, desc="Images seen")
-    pbar_processed = tqdm(total=total_imgs, desc="Images processed")
+    pbar_seen = tqdm(total=total_imgs, desc="Images seen", smoothing=0.001)
+    pbar_processed = tqdm(total=total_imgs, desc="Images processed", smoothing=0.001)
     if cfg.n_proc == 1:
         process_func = single_proc
     if cfg.n_proc > 1:

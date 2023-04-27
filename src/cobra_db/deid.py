@@ -97,12 +97,17 @@ class Deider:
     def _round_AS_to_nearest_5y(item, value, field, dicom):
         """Rounds age(AS) field to 5 year intervals in the deid framework"""
         age = parse_AS_as_int(field.element.value)
+        if age is None:
+            age = -1
         return f"{Deider._round_to_nearest(age, 5):03d}Y"
 
     @staticmethod
     def _round_DS_to_nearest_5(item, value, field, dicom):
         """Rounds age(AS) field to 5 year intervals in the deid framework"""
-        return f"{Deider._round_to_nearest(float(field.element.value), 5)}"
+        value = field.element.value
+        if value is None:
+            value = -1
+        return f"{Deider._round_to_nearest(float(value), 5)}"
 
     @staticmethod
     def _round_DS_to_nearest_0_05(item, value, field, dicom) -> str:

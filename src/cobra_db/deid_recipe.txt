@@ -44,7 +44,7 @@ REMOVE contains:^50.{6}$
 # Overlay comments and data (60xx[34]000)
 REMOVE contains:^60.{2}[34]000$
 # Private tags ggggeeee where gggg is odd
-REMOVE contains:^.{3}[13579].{4}$
+REMOVE contains:^.{3}[13579ACEace].{4}$
 
 # Tags not found in pydicom._data_dict
 BLANK contains:001811BB
@@ -64,7 +64,6 @@ REMOVE contains:300A079A
 # Everything else in Table E1 of the dicom standard (In alphabetical order).
 # pydicom.datadict.keyword_for_tag and tag_for_keyword can be used to convert these names to tags
 BLANK AcquisitionContextSequence
-BLANK AcquisitionDeviceProcessingDescription
 BLANK Allergies
 BLANK BarcodeValue
 BLANK ClinicalTrialProtocolID
@@ -79,7 +78,6 @@ BLANK ConsultingPhysicianName
 BLANK ContainerIdentifier
 BLANK ContentCreatorName
 BLANK ContentSequence
-BLANK ContrastBolusAgent
 BLANK DeviceAlternateIdentifier
 BLANK EntityLabel
 BLANK EntityLongLabel
@@ -101,7 +99,6 @@ BLANK PlacerOrderNumberImagingServiceRequest
 BLANK PreMedication
 BLANK PrescriptionNotes
 BLANK PrescriptionNotesSequence
-BLANK ProtocolName
 BLANK ROIInterpreter
 BLANK ROIName
 BLANK RTAccessoryDeviceSlotID
@@ -118,7 +115,6 @@ BLANK RadiationGenerationModeLabel
 BLANK ReasonForSuperseding
 BLANK ReasonForTheAttributeModification
 BLANK ReferencedStudySequence
-BLANK RequestedProcedureDescription
 BLANK ReviewerName
 BLANK SelectorLOValue
 BLANK SelectorLTValue
@@ -167,6 +163,7 @@ KEEP ContentDate
 KEEP ContentTime
 KEEP ContextGroupLocalVersion
 KEEP ContextGroupVersion
+KEEP ContrastBolusAgent
 KEEP ContrastBolusStartTime
 KEEP ContrastBolusStopTime
 KEEP ContributionDateTime
@@ -252,6 +249,7 @@ KEEP LensSpecification
 KEEP ManufacturerDeviceClassUID
 KEEP ManufacturerDeviceIdentifier
 KEEP MediaStorageSOPInstanceUID
+KEEP Modality
 KEEP ModifiedImageDate
 KEEP ModifiedImageTime
 KEEP ModifyingDeviceID
@@ -289,6 +287,7 @@ KEEP PresentationDisplayCollectionUID
 KEEP PresentationSequenceCollectionUID
 KEEP ProcedureStepCancellationDateTime
 KEEP ProductExpirationDateTime
+KEEP ProtocolName
 KEEP RTPlanDate
 KEEP RTPlanTime
 KEEP RTTreatmentPhaseUID
@@ -406,6 +405,7 @@ KEEP XRayDetectorID
 KEEP XRayDetectorLabel
 KEEP XRaySourceID
 REMOVE AcquisitionComments
+REMOVE AcquisitionDeviceProcessingDescription
 REMOVE AcquisitionProtocolDescription
 REMOVE ActualHumanPerformersSequence
 REMOVE AdditionalPatientHistory
@@ -581,6 +581,7 @@ REMOVE RegionOfResidence
 REMOVE RequestAttributesSequence
 REMOVE RequestedContrastAgent
 REMOVE RequestedProcedureComments
+REMOVE RequestedProcedureDescription
 REMOVE RequestedProcedureLocation
 REMOVE RequestedSeriesDescription
 REMOVE RequestingPhysician
