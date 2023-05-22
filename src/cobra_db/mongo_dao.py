@@ -195,6 +195,13 @@ class EntityDao:
         result = self.collection.delete_one({"_id": _id})
         assert result.deleted_count == 1
 
+    def insert_one(self, entity_instance: Entity) -> ObjectId:
+        """
+        Insert an instance into the database.
+        """
+        _id = self.collection.insert_one(entity_instance.to_dict()).inserted_id
+        return _id
+
 
 class PatientDao(EntityDao):
     """
