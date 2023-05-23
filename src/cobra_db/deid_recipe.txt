@@ -19,7 +19,7 @@ FORMAT dicom
 %header
 
 ADD PatientIdentityRemoved Yes
-ADD DeidentificationMethod vaib_deid_v1.0.1
+ADD DeidentificationMethod vaib_deid_v1.0.2
 
 # Replacements with custom functions. Those can be found in cobra_db.deid
 
@@ -38,13 +38,21 @@ REPLACE PatientWeight func:round_DS_to_nearest_5
 REPLACE PatientSize func:round_DS_to_nearest_0_05
 REPLACE PatientAge func:round_AS_to_nearest_5y
 
+
 # Tags that require custom treatment
+
+# BEWARE OF UNEXPECTED REGEX MATCHES
+# the underlying `deid` library uses regex on all the possible versions of
+# the tag. For example the expression "^.{2}[dD]" can match any of the following
+# ["00D0001", "(0DEF,0001)", "Modality"].
+# Therefore, it is recommended to search for the tag with parenthesis.
+
 # Curve Data"(50xx,xxxx)"
-REMOVE contains:^50.{6}$
+REMOVE contains:^\(50.{2},.{4}\)$
 # Overlay comments and data (60xx[34]000)
-REMOVE contains:^60.{2}[34]000$
+REMOVE contains:^\(60.{2},[34]000\)$
 # Private tags ggggeeee where gggg is odd
-REMOVE contains:^.{3}[13579ACEace].{4}$
+REMOVE contains:^\(.{3}[13579BDFbdf],.{4}\)$
 
 # Tags not found in pydicom._data_dict
 BLANK contains:001811BB
