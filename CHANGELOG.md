@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2023-05-23)
+### Feature
+* **mongo_dao:** Add Entity insert_one ([#18](https://github.com/mammoai/cobra-db/issues/18)) ([`af4053a`](https://github.com/mammoai/cobra-db/commit/af4053ad133644e2283189922245af6f6fa0ef13))
+
 ## v0.2.4 (2023-04-14)
 
 
