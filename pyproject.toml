@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cobra_db"
-version = "0.2.5"
+version = "0.3.1"
 description = "COnsolidated BReast cancer Analysis DataBase"
 authors = ["Fernando Cossio", "Apostolia Tsirikoglou", "Haiko Schurz", "Hui Li", "Fredrik Strand"]
 license = "Apache License 2.0"
