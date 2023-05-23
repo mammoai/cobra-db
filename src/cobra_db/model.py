@@ -322,17 +322,20 @@ class RadiologicalStudy(DicomEntity):
                 cls.optional(ds, "PatientPregnancyStatus", PregnancyStatus, None)
             ),
             dicom_tags=DatasetMod.tags_to_keywords(ds.to_json_dict()),
-
             # The ones below all get overriden while grouping
             series_count=cls.optional(ds, "SeriesNumber", int, None),
-            manufacturer = cls.optional(ds, "Manufacturer", str, None),
-            manufacturer_model_name = cls.optional(ds, "ManufacturerModelName", str, None),
-            detector_id = cls.optional(ds, "DetectorID", str, None),
-            detector_type = cls.optional(ds, "DetectorType", str, None),
-            device_serial_number = cls.optional(ds, "DeviceSerialNumber", str, None),
-            software_versions = cls.optional(ds, "SoftwareVersions", None, None),
-            date_of_last_detector_calibration = cls.optional(ds, "DateOfLastDetectorCalibration", parse_DA_as_datetime, None),
-            breast_implant_present = cls.optional(ds, "BreastImplantPresent", str, None)
+            manufacturer=cls.optional(ds, "Manufacturer", str, None),
+            manufacturer_model_name=cls.optional(
+                ds, "ManufacturerModelName", str, None
+            ),
+            detector_id=cls.optional(ds, "DetectorID", str, None),
+            detector_type=cls.optional(ds, "DetectorType", str, None),
+            device_serial_number=cls.optional(ds, "DeviceSerialNumber", str, None),
+            software_versions=cls.optional(ds, "SoftwareVersions", None, None),
+            date_of_last_detector_calibration=cls.optional(
+                ds, "DateOfLastDetectorCalibration", parse_DA_as_datetime, None
+            ),
+            breast_implant_present=cls.optional(ds, "BreastImplantPresent", str, None),
         )
 
     @classmethod

@@ -1,11 +1,11 @@
 import os
 import shutil
+from copy import copy
 
 import numpy as np
 import pydicom
 import pytest
 from dotenv import load_dotenv
-from copy import copy
 
 from cobra_db.mongo_dao import Connector
 from cobra_db.scripts.pseudonymize_image_metadata import (
@@ -72,8 +72,8 @@ def test_recipe_mux(config, expected: list, extra_recipe):
     config = copy(config)
     if config["recipe"] == list:
         config["recipe"] = [extra_recipe]
-    elif config['recipe'] == str:
-        config['recipe'] = extra_recipe
+    elif config["recipe"] == str:
+        config["recipe"] = extra_recipe
     result = recipe_mux(**config)
     assert result == expected
 

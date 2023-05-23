@@ -77,6 +77,7 @@ Ready to contribute? Here's how to set up `cobra_db` for local development.
     ```bash
     cd docs
     make html -B
+    # you can also directly run `sphinx-build -b html . _build`
     ```
 
 6. Pre-commit hooks are configured for style: isort, black and flake8. You can manually

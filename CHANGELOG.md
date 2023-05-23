@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.4 (2023-04-14)
+
+
+## v0.2.3 (2023-04-05)
+### Documentation
+* **API:** Better docstrings for the mongo_dao module ([`45d4d83`](https://github.com/mammoai/cobra-db/commit/45d4d8322b9d995ec1bcfbf55f99b050a5722d01))
+
 ## v0.2.2 (2023-03-20)
 ### Documentation
 * **update:** VAI-B paper DOI ([`aaf6dec`](https://github.com/mammoai/cobra-db/commit/aaf6dec391755d648b0e226b8b0abcccd70a147b))

@@ -46,13 +46,15 @@ def get_tag(d, keyword):
     except KeyError:
         return set()
 
-def set_union(dicom_tags:List[dict], keyword):
+
+def set_union(dicom_tags: List[dict], keyword):
     values = set()
     for d in dicom_tags:
         values = values.union(get_tag(d, keyword))
     if len(values) == 0:
         return None
     return list(values)
+
 
 def group_study(images: List[dict], project_name: str) -> RadiologicalStudy:
     """Takes the dict of many ImageMetadata instances.
@@ -76,7 +78,7 @@ def group_study(images: List[dict], project_name: str) -> RadiologicalStudy:
         return None
 
     union_keywords = {
-        'study_uid': "StudyInstanceUID", 
+        "study_uid": "StudyInstanceUID",
         "accession_number": "AccessionNumber",
         "modality": "Modality",
         "sop_class": "SOPClassUID",
@@ -87,12 +89,11 @@ def group_study(images: List[dict], project_name: str) -> RadiologicalStudy:
         "device_serial_number": "DeviceSerialNumber",
         "software_versions": "SoftwareVersions",
         "date_of_last_detector_calibration": "DateOfLastDetectorCalibration",
-        'breast_implant_present': "BreastImplantPresent",
+        "breast_implant_present": "BreastImplantPresent",
     }
     for attr_name, keyword in union_keywords.items():
         setattr(study, attr_name, set_union(dicom_tags, keyword))
-    
-    
+
     study.series_count = len(set_union(dicom_tags, "SeriesInstanceUID"))
     study._metadata.project_name = project_name
     return study
