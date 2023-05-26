@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.1 (2023-05-26)
+### Fix
+* **deid recipe:** Find intended tags with regex ([#22](https://github.com/mammoai/cobra-db/issues/22)) ([`fba79f1`](https://github.com/mammoai/cobra-db/commit/fba79f1d3f3e75574c48e77a4e9c56afac29f2f8))
+* **semantic release:** Publish to protected branch ([#21](https://github.com/mammoai/cobra-db/issues/21)) ([`87135f6`](https://github.com/mammoai/cobra-db/commit/87135f688cab4de2c0072680d8959cc5760c8e4d))
+* **semantic release:** Publish on protected branch ([`dfd0a69`](https://github.com/mammoai/cobra-db/commit/dfd0a69848d5a3b86a19a03dfcc3afcbffb33afa))
+
 ## v0.3.0 (2023-05-23)
 ### Feature
 * **mongo_dao:** Add Entity insert_one ([#18](https://github.com/mammoai/cobra-db/issues/18)) ([`af4053a`](https://github.com/mammoai/cobra-db/commit/af4053ad133644e2283189922245af6f6fa0ef13))
