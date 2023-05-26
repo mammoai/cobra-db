@@ -145,3 +145,4 @@ tests/tmp/
 
 docs/jupyter_execute
 .ipynb_checkpoints
+.vscode/launch.json

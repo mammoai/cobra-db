@@ -10,7 +10,7 @@ from deid.dicom.parser import DicomParser
 from deid.logger import bot
 
 from cobra_db.encrypt import Hasher
-from cobra_db.utils import parse_AS_as_int
+from cobra_db.utils import parse_AS_as_int, parse_DA_TM_as_datetime
 
 base_recipe_path = os.path.join(os.path.dirname(__file__), "deid_recipe.txt")
 mr_recipe_path = os.path.join(os.path.dirname(__file__), "deid_recipe_mr.txt")
@@ -69,7 +69,7 @@ class Deider:
         parser.define("round_AS_to_nearest_5y", self._round_AS_to_nearest_5y)
         parser.define("round_DS_to_nearest_5", self._round_DS_to_nearest_5)
         parser.define("round_DS_to_nearest_0_05", self._round_DS_to_nearest_0_05)
-        parser.parse(strip_sequences=True, remove_private=True)
+        parser.parse(strip_sequences=False, remove_private=True)
         return parser.dicom
 
     @staticmethod
@@ -96,9 +96,19 @@ class Deider:
     @staticmethod
     def _round_AS_to_nearest_5y(item, value, field, dicom):
         """Rounds age(AS) field to 5 year intervals in the deid framework"""
-        age = parse_AS_as_int(field.element.value)
-        if age is None:
-            age = -1
+        value = field.element.value
+        # if age is empty, try to calculate it from the StudyDate and PatientBirthDate
+        if value == '' or value == None:
+            try:
+                study_date = dicom.get('StudyDate')
+                study_date = parse_DA_TM_as_datetime(DA=study_date, TM='000000')
+                birth_date = dicom.get('PatientBirthDate')
+                birth_date = parse_DA_TM_as_datetime(DA=birth_date, TM='000000')
+                age = (study_date - birth_date).days/365
+            except:
+                return ''
+        else:
+            age = parse_AS_as_int(field.element.value)
         return f"{Deider._round_to_nearest(age, 5):03d}Y"
 
     @staticmethod
