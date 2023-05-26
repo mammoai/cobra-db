@@ -21,9 +21,11 @@ FORMAT dicom
 ADD PatientIdentityRemoved Yes
 ADD DeidentificationMethod vaib_deid_v1.0.2
 
-# Replacements with custom functions. Those can be found in cobra_db.deid
+# Replacements with custom functions. These can be found in cobra_db.deid
 
+REPLACE PatientAge func:round_AS_to_nearest_5y
 REPLACE PatientName func:replace_name
+REPLACE ReferringPhysicianName func:hash_func
 REPLACE AccessionNumber func:hash_func
 REPLACE AdmissionID func:hash_func
 REPLACE InterpretationID func:hash_func
@@ -36,7 +38,6 @@ REPLACE ResultsID func:hash_func
 REPLACE StudyID func:hash_func
 REPLACE PatientWeight func:round_DS_to_nearest_5
 REPLACE PatientSize func:round_DS_to_nearest_0_05
-REPLACE PatientAge func:round_AS_to_nearest_5y
 
 
 # Tags that require custom treatment
@@ -316,6 +317,8 @@ KEEP ReferencedSOPInstanceUID
 KEEP ReferencedSOPInstanceUIDInFile
 KEEP RelatedFrameOfReferenceUID
 KEEP RequestedSOPInstanceUID
+KEEP RescaleIntercept
+KEEP RescaleSlope
 KEEP ReviewDate
 KEEP ReviewTime
 KEEP SOPAuthorizationDateTime
@@ -409,6 +412,10 @@ KEEP UDISequence
 KEEP UID
 KEEP UniqueDeviceIdentifier
 KEEP VerificationDateTime
+KEEP VOILUTSequence
+KEEP VOILUTFunction
+KEEP WindowCenter
+KEEP WindowWidth
 KEEP XRayDetectorID
 KEEP XRayDetectorLabel
 KEEP XRaySourceID
@@ -581,7 +588,6 @@ REMOVE ReferencedPatientPhotoSequence
 REMOVE ReferencedPatientSequence
 REMOVE ReferencedPerformedProcedureStepSequence
 REMOVE ReferencedSOPInstanceMACSequence
-REMOVE ReferringPhysicianName
 REMOVE ReferringPhysicianAddress
 REMOVE ReferringPhysicianIdentificationSequence
 REMOVE ReferringPhysicianTelephoneNumbers

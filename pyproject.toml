@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cobra_db"
-version = "0.3.1"
+version = "0.3.0"
 description = "COnsolidated BReast cancer Analysis DataBase"
 authors = ["Fernando Cossio", "Apostolia Tsirikoglou", "Haiko Schurz", "Hui Li", "Fredrik Strand"]
 license = "Apache License 2.0"
@@ -18,7 +18,7 @@ deid = "^0.2.36"
 pycryptodome = "^3.15.0"
 pyaml-env = "^1.1.5"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.1.2"
 pytest-cov = "^3.0.0"
 pre-commit = "^2.20.0"
@@ -32,6 +32,7 @@ myst-nb = {version = "^0.16.0", python = "^3.9"}
 python-semantic-release = "^7.31.4"
 pytest-mongodb = "^2.2.0"
 python-dotenv = "^0.21.0"
+dicom-validator = "^0.3.4"
 
 [tool.semantic_release]
 version_variable = "pyproject.toml:version" # version location
