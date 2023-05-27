@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.2 (2023-05-27)
+### Fix
+* Semantic-release ([#24](https://github.com/mammoai/cobra-db/issues/24)) ([`03701de`](https://github.com/mammoai/cobra-db/commit/03701de52317caa19c2b08492be01a4035ee541b))
+
 ## v0.3.1 (2023-05-26)
 ### Fix
 * **deid recipe:** Find intended tags with regex ([#22](https://github.com/mammoai/cobra-db/issues/22)) ([`fba79f1`](https://github.com/mammoai/cobra-db/commit/fba79f1d3f3e75574c48e77a4e9c56afac29f2f8))
