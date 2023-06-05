@@ -3,6 +3,7 @@ import os
 import sys
 from argparse import ArgumentParser, Namespace
 from multiprocessing import Pool
+from time import sleep
 from typing import List, Union
 
 import pydicom
@@ -18,8 +19,6 @@ from cobra_db.filesystem import get_instance_path
 from cobra_db.model import FileSource, ImageMetadata
 from cobra_db.mongo_dao import Connector, ImageMetadataDao
 from cobra_db.scripts.utils import add_args_to_iterable, batcher
-
-from time import sleep
 
 
 def parse_arguments(raw_args: List[str]) -> str:
@@ -171,7 +170,7 @@ def process_im_meta(
         print(f"{e} - {dst_filepath}")
         if retries > 0:
             sleep(2)
-            print(f"Retrying now, {r} retries left - {dst_filepath}")
+            print(f"Retrying now, {retries} retries left - {dst_filepath}")
             r = retries - 1
             return process_im_meta(im_meta_dict, cfg, src_im_dao, dst_im_dao, r)
         print(
