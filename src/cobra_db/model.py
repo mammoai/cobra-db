@@ -3,7 +3,7 @@ import os
 from copy import copy
 from dataclasses import dataclass, fields, is_dataclass
 from datetime import datetime, timezone
-from typing import Callable, List, Tuple, Type, Union
+from typing import Callable, List, Literal, Tuple, Type, Union
 
 import numpy as np
 import pydicom
@@ -486,3 +486,35 @@ class ImageMetadata(DicomEntity):
 
     def __repr__(self):
         return super().__repr__()
+
+
+@dataclass
+class Annotation(Entity):
+    """
+    Abstract class for any annotation that is stored in cobra_db. Should be subclassed
+    """
+
+    annotation_type: List[
+        Literal["text", "semantic_segmentation", "binary", "categorical"]
+    ]
+    annotator_email: str
+    date: datetime  # annotation date
+    possible_labels: List[
+        str
+    ]  # List of all possible labels example [mass, non-mass, ...]
+    file_format: str  # Name of the extension of the file. jpeg, png, npz, etc.
+    aggregation_level: Literal["patient", "study", "series", "image"]
+    # For example the SOPInstanceUID of the image, StudyInstanceID of the study, etc.
+    referenced_entity_uid: str
+    patient_anon_id: str
+    study_date: datetime
+    file_source: FileSource  # file/folder of the annotation
+    project_name: str
+
+
+@dataclass
+class Annotator(Entity):
+    email: str
+    specialization: str
+    first_name: str
+    last_name: str

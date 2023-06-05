@@ -108,7 +108,7 @@ def test_main(cfg):
         os.path.join(
             dst_path,
             "rel_path/to/my/dst_path/660/05c/ed21cd58352ee70252/study_20000526/series_CT\
-_125800_NEPHRO--4-0--B40f--M-0-4/2.25.99060618693674907730262422884187749878.dcm"
+_125800_NEPHRO--4-0--B40f--M-0-4/2.25.99060618693674907730262422884187749878.dcm",
         )
     )
     # run for all images

@@ -98,15 +98,16 @@ class Deider:
         """Rounds age(AS) field to 5 year intervals in the deid framework"""
         value = field.element.value
         # if age is empty, try to calculate it from the StudyDate and PatientBirthDate
-        if value == '' or value == None:
+        if value == "" or value is None:
             try:
-                study_date = dicom.get('StudyDate')
-                study_date = parse_DA_TM_as_datetime(DA=study_date, TM='000000')
-                birth_date = dicom.get('PatientBirthDate')
-                birth_date = parse_DA_TM_as_datetime(DA=birth_date, TM='000000')
-                age = (study_date - birth_date).days/365
-            except:
-                return ''
+                study_date = dicom.get("StudyDate")
+                study_date = parse_DA_TM_as_datetime(DA=study_date, TM="000000")
+                birth_date = dicom.get("PatientBirthDate")
+                birth_date = parse_DA_TM_as_datetime(DA=birth_date, TM="000000")
+                age = (study_date - birth_date).days / 365
+            except Exception as e:
+                logging.error(e)
+                return ""
         else:
             age = parse_AS_as_int(field.element.value)
         return f"{Deider._round_to_nearest(age, 5):03d}Y"
