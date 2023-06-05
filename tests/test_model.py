@@ -7,6 +7,8 @@ from bson import ObjectId
 from pydicom.data import get_testdata_file
 
 from cobra_db.model import (
+    Annotation,
+    Annotator,
     FileSource,
     ImageMetadata,
     Patient,
@@ -182,3 +184,27 @@ def test_image_metadata_from_dataset():
     s = ImageMetadata.from_dataset(ds, mount_paths)
     assert s.file_source.filename == "MR_small.dcm"
     assert s.get_tag("PatientID") == "4MR1"
+
+
+def test_annotation():
+    annotation = Annotation(
+        None,
+        None,
+        "text",
+        "abc@abc.abc",
+        datetime.now(),
+        ["test", "no test"],
+        "txt",
+        "patient",
+        "1.1.1.1",
+        "anon_patient_abc",
+        "20230606",
+        None,
+        None,
+    )
+    assert annotation.study_date == "20230606"
+
+
+def test_annotator():
+    annotator = Annotator(None, None, "abc@abc.abc", "testing", "tester", "testerson")
+    assert annotator.last_name == "testerson"
