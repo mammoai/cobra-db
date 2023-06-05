@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.1 (2023-06-05)
+
+
 ## v0.4.0 (2023-06-05)
 ### Feature
 * **model:** Add datamodel for Annotations ([#25](https://github.com/mammoai/cobra-db/issues/25)) ([`28e19ca`](https://github.com/mammoai/cobra-db/commit/28e19ca68a25bf92c95c6bc0a8782c3e5fc49163))
