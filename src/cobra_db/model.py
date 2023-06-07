@@ -4,7 +4,7 @@ from copy import copy
 from dataclasses import dataclass, fields, is_dataclass
 from datetime import datetime, timezone
 from typing import Callable, List, Literal, Tuple, Type, Union
-
+from pathlib import Path
 import numpy as np
 import pydicom
 from bson import ObjectId
@@ -219,10 +219,10 @@ class FileSource(Embedded, Source):
         :param mount_paths: _description_
         """
         for drive_name, mount_path in mount_paths.items():
-            rel_path = os.path.relpath(filepath, mount_path)
-            # TODO: this method will raise ValueError in Windows
-            if not rel_path.startswith(".."):  # file in the mount_path
-                return cls(drive_name=drive_name, rel_path=rel_path)
+            path = Path(filepath)
+            mount_path = Path(mount_path)
+            rel_path = str(path.relative_to(mount_path).as_posix())
+            return cls(drive_name=drive_name, rel_path=rel_path)
         raise ValueError(f"{filepath} is not in any of the mount paths: {mount_paths}")
 
 
