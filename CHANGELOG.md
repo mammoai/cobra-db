@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.3 (2023-06-07)
+### Fix
+* **FileSource:** Possible to create paths from Windows ([`eae5bfd`](https://github.com/mammoai/cobra-db/commit/eae5bfd9d4cf9fedbd5623ca41cd08f79dec38df))
+
 ## v0.4.2 (2023-06-05)
 
 
