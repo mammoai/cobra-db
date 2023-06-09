@@ -500,7 +500,7 @@ class Annotation(Entity):
     annotator_email: str
     date: datetime  # annotation date
     possible_labels: List[
-        str
+        int
     ]  # List of all possible labels example [mass, non-mass, ...]
     file_format: str  # Name of the extension of the file. jpeg, png, npz, etc.
     aggregation_level: Literal["patient", "study", "series", "image"]
