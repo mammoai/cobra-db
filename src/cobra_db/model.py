@@ -68,6 +68,7 @@ class Metadata(Embedded):
     created: datetime
     modified: datetime = None
     project_name: str = None
+    ethical_approval: List[str] = None
 
     @classmethod
     def create(cls):
