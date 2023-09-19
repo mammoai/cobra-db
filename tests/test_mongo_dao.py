@@ -7,8 +7,7 @@ from cobra_db.model import (
     Entity, 
     FileSource, 
     ImageMetadata, 
-    Patient,
-    EthicalApproval)
+    Patient)
 from cobra_db.mongo_dao import (
     Connector,
     EntityDao,
