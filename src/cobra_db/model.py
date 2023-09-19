@@ -9,6 +9,7 @@ import numpy as np
 import pydicom
 from bson import ObjectId
 from pydicom.dataset import Dataset
+# from cobra_db.mongo_dao import EthicalApprovalDao
 
 from cobra_db import __version__
 from cobra_db.dataset_mod import DatasetMod
@@ -68,11 +69,24 @@ class Metadata(Embedded):
     created: datetime
     modified: datetime = None
     project_name: str = None
+    ethical_approval: List[str] = None
 
     @classmethod
     def create(cls):
         return cls(model_version=__version__, created=datetime.now(timezone.utc))
 
+    # @classmethod
+    # def get_ethical_approval(cls, ethical_dao: EthicalApprovalDao, patient_anon_id:str, get_option=False) -> bool:
+    #     '''
+    #     get ethical_approval information from EthicalApproval collection with patient_anon_id
+    #     '''
+    #     if get_option:
+    #         ethical_approval_find = ethical_dao.collection.find_one(
+    #                         {"patient_anon_id": patient_anon_id}, {"ethical_approval": 1}
+    #                     )
+    #     if ethical_approval_find is not None:
+    #         return cls(model_version=ethical_approval_find["ethical_approval"])
+        
 
 @dataclass
 class Entity(BaseObj):
@@ -518,3 +532,17 @@ class Annotator(Entity):
     specialization: str
     first_name: str
     last_name: str
+
+
+@dataclass
+class EthicalApproval(Entity):
+    """
+    define EthicalApproval data types to insert into database
+    """
+    slug: str = None # connect with _metadata
+    start_date: datetime = None
+    main_application_number: str = None
+    amendment_application_numbers: List[str] = None
+    end_date: datetime = None
+    path_to_files: str = None # OneDrive
+    plain_text: str = None

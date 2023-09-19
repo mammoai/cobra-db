@@ -7,6 +7,7 @@ from bson import ObjectId
 from pydicom.data import get_testdata_file
 
 from cobra_db.model import (
+    Metadata,
     Annotation,
     Annotator,
     FileSource,
@@ -56,6 +57,16 @@ def patient_dict():
 def test_patient_from_dict_to_dict(patient_dict):
     p = Patient.from_dict(patient_dict)
     assert p.to_dict() == patient_dict
+
+
+@pytest.fixture
+def metadata_dict():
+    return {"model_version": "0.1.2", "created": datetime(2022, 3, 11), 'ethical_approval':['e1']}
+
+def test_metadata(metadata_dict):
+    m = Metadata.from_dict(metadata_dict)
+    assert m.to_dict() == metadata_dict
+    assert m.ethical_approval[0]== 'e1'
 
 
 @pytest.fixture

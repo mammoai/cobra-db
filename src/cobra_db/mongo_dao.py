@@ -18,6 +18,7 @@ from cobra_db.model import (
     Patient,
     RadiologicalSeries,
     RadiologicalStudy,
+    EthicalApproval,
 )
 from cobra_db.types import Id
 
@@ -569,3 +570,17 @@ class ImageMetadataDao(EntityDao):
                 },
             },
         )
+
+
+# class EthicalApprovalDao(EntityDao):
+#     """
+#     Insert EthicalApproval information to the database
+#     """
+
+#     def __init__(self, connector):
+#         super().__init__(connector, EthicalApproval)
+
+#     def insert_one(self, ethicalapproval: EthicalApproval) -> ObjectId:
+#         _id = self.collection.insert_one(ethicalapproval.to_dict()).inserted_id
+#         return _id
+    
