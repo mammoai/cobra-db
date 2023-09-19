@@ -9,7 +9,6 @@ import numpy as np
 import pydicom
 from bson import ObjectId
 from pydicom.dataset import Dataset
-# from cobra_db.mongo_dao import EthicalApprovalDao
 
 from cobra_db import __version__
 from cobra_db.dataset_mod import DatasetMod
