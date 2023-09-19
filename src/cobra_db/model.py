@@ -74,7 +74,7 @@ class Metadata(Embedded):
     @classmethod
     def create(cls):
         return cls(model_version=__version__, created=datetime.now(timezone.utc))
-        
+
 
 @dataclass
 class Entity(BaseObj):
