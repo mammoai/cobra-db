@@ -14,10 +14,9 @@ from cobra_db.mongo_dao import (
     ImageMetadataDao,
     PatientDao,
     SeriesDao,
-    # EthicalApprovalDao,
 )
 
-# ImageMetadataDao, SeriesDao, StudyDao
+# ImageMetadataDao, SeriesDao, StudyDao, EthicalApprovalDao
 
 
 @pytest.mark.parametrize(
@@ -93,25 +92,3 @@ def test_entity_dao_insert_one(mongodb):
     instance_dict = connector.db.FunnyEntity.find_one({"_id": _id})
     assert instance_dict["joke"] == "Whos this?"
     assert instance_dict.get("joke_response", 1) == 1
-
-
-# def test_ethicalapproval_dao(mongodb):
-#     connector = Connector("test.host.com", 27017, "test_db")
-#     # the connector db has to be overriden to use the mock database
-#     connector.db = mongodb
-
-#     # Create a Dao
-#     entity_dao = EntityDao(connector, EthicalApproval)
-#     patient_anon_id="test_EthicalApproval"
-#     ethical_instance = EthicalApproval(
-#         _id=None, 
-#         _metadata=None, 
-#         slug = 'test',
-#         patient_anon_id=patient_anon_id, 
-#         ethical_approval=1)
-#     _id = entity_dao.insert_one(ethical_instance)
-
-#     instance_dict = connector.db.EthicalApproval.find_one({"slug": slug})
-#     assert instance_dict["slug"] == "slug"
-#     assert instance_dict.get("slug", slug) == 'slug'
-    
