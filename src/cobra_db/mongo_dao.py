@@ -18,7 +18,6 @@ from cobra_db.model import (
     Patient,
     RadiologicalSeries,
     RadiologicalStudy,
-    EthicalApproval,
 )
 from cobra_db.types import Id
 

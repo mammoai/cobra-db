@@ -74,18 +74,6 @@ class Metadata(Embedded):
     @classmethod
     def create(cls):
         return cls(model_version=__version__, created=datetime.now(timezone.utc))
-
-    # @classmethod
-    # def get_ethical_approval(cls, ethical_dao: EthicalApprovalDao, patient_anon_id:str, get_option=False) -> bool:
-    #     '''
-    #     get ethical_approval information from EthicalApproval collection with patient_anon_id
-    #     '''
-    #     if get_option:
-    #         ethical_approval_find = ethical_dao.collection.find_one(
-    #                         {"patient_anon_id": patient_anon_id}, {"ethical_approval": 1}
-    #                     )
-    #     if ethical_approval_find is not None:
-    #         return cls(model_version=ethical_approval_find["ethical_approval"])
         
 
 @dataclass
