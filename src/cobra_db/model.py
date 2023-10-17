@@ -68,6 +68,7 @@ class Metadata(Embedded):
     created: datetime
     modified: datetime = None
     project_name: str = None
+    ethical_approval: List[str] = None
 
     @classmethod
     def create(cls):
@@ -518,3 +519,17 @@ class Annotator(Entity):
     specialization: str
     first_name: str
     last_name: str
+
+
+@dataclass
+class EthicalApproval(Entity):
+    """
+    define EthicalApproval data types to insert into database
+    """
+    slug: str = None # connect with _metadata
+    start_date: datetime = None
+    main_application_number: str = None
+    amendment_application_numbers: List[str] = None
+    end_date: datetime = None
+    path_to_files: str = None # OneDrive
+    plain_text: str = None

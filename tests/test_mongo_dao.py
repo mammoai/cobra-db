@@ -3,7 +3,11 @@ from pathlib import Path
 
 import pytest
 
-from cobra_db.model import Entity, FileSource, ImageMetadata, Patient
+from cobra_db.model import (
+    Entity, 
+    FileSource, 
+    ImageMetadata, 
+    Patient)
 from cobra_db.mongo_dao import (
     Connector,
     EntityDao,
@@ -12,7 +16,7 @@ from cobra_db.mongo_dao import (
     SeriesDao,
 )
 
-# ImageMetadataDao, SeriesDao, StudyDao
+# ImageMetadataDao, SeriesDao, StudyDao, EthicalApprovalDao
 
 
 @pytest.mark.parametrize(
