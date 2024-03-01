@@ -44,6 +44,7 @@ class Deider:
         :param hasher_secret_salt: salt for hashing
         """
         bot.level = deid_logging_levels[logging_level]
+        self.logging_level=logging_level
         if recipe_path is None:
             logging.warning(f"DeidDataset using default recipe {base_recipe_path}")
             recipe_path = base_recipe_path
@@ -69,6 +70,7 @@ class Deider:
         parser.define("round_AS_to_nearest_5y", self._round_AS_to_nearest_5y)
         parser.define("round_DS_to_nearest_5", self._round_DS_to_nearest_5)
         parser.define("round_DS_to_nearest_0_05", self._round_DS_to_nearest_0_05)
+        bot.level = deid_logging_levels[self.logging_level]
         parser.parse(strip_sequences=False, remove_private=True)
         return parser.dicom
 
