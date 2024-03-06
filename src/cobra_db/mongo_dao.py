@@ -41,6 +41,7 @@ class Connector:
         db_name: str,
         username: str = None,
         password: str = None,
+        **kwargs
     ):
         """Create a new instance of the Connector.
         Remember that passwords should not be stored in plain text and
@@ -60,6 +61,8 @@ class Connector:
         self.db_name = db_name
         self.username = username
         self.password = password
+        self.tls = tls
+        self.kwargs = kwargs
         self.connect()
 
     def connect(self):
@@ -70,6 +73,7 @@ class Connector:
             self._get_uri(self.host, self.port, self.username, self.password),
             serverSelectionTimeoutMS=5000,
             connectTimeoutMS=5000,
+            **self.kwargs
         )
 
         self.db = self.client[self.db_name]
@@ -96,7 +100,7 @@ class Connector:
         self.client.close()
 
     @classmethod
-    def get_pass(cls, host: str, port: int, db_name: str, username: str):
+    def get_pass(cls, host: str, port: int, db_name: str, username: str, *kwargs):
         """Create a Connector instance by prompting the user for a password.
         Most useful in jupyter notebooks.
         """
@@ -104,7 +108,7 @@ class Connector:
             f"Password for {cls._get_uri(host, port, username, db_name)} "
         )
         assert password != "" and password is not None, "Password is empty"
-        return cls(host, port, db_name, username, password)
+        return cls(host, port, db_name, username, password, **kwargs)
 
     @classmethod
     def get_env_pass(
@@ -114,6 +118,7 @@ class Connector:
         db_name: str,
         username: str,
         env_var: str = "MONGOPASS",
+        **kwargs
     ):
         """Create a Connector instance by getting the password from the environment
         variable defined in env_var. Useful when creating scripts.
@@ -124,7 +129,7 @@ class Connector:
         ), f"Env variable {env_var} is empty, please run \n\
              export {env_var}='mypassword'\n\
             and then try again."
-        return cls(host, port, db_name, username, password)
+        return cls(host, port, db_name, username, password, **kwargs)
 
     def __str__(self):
         if self.password is not None:
