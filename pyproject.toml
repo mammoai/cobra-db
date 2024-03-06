@@ -25,10 +25,10 @@ pre-commit = "^2.20.0"
 black = "^22.6.0"
 isort = "^5.10.1"
 flake8 = "^5.0.4"
-Sphinx = "^5.1.1"
-sphinx-autoapi = "^1.9.0"
+Sphinx = "^6.2.1"
+sphinx-autoapi = "^3.0.0"
 sphinx-rtd-theme = "^1.0.0"
-myst-nb = {version = "^0.16.0", python = "^3.9"}
+myst-nb = {version = "^1.0.0", python = "^3.9"}
 python-semantic-release = "^7.31.4"
 pytest-mongodb = "^2.2.0"
 python-dotenv = "^0.21.0"

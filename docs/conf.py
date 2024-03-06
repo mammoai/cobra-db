@@ -44,4 +44,4 @@ html_theme_options = {
 }
 
 # Myst cache output of notebooks
-jupyter_execute_notebooks = "force"
+nb_execution_mode = "force"
