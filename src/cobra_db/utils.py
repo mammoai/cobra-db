@@ -84,6 +84,9 @@ def parse_AS_as_int(AS: str) -> int:
         logging.warning("AS is empty, returning -1")
         return -1
     if len(AS) > 0:
+        if AS.endswith("D"):
+            logging.warning("Not skiping but AS ended with `D`")
+            return -1
         if AS[-1] == "Y":
             return int(AS[:-1])
         else:
